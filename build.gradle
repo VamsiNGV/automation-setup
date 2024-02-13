@@ -1,0 +1,52 @@
+plugins {
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.seleniumhq.selenium:selenium-java:4.17.0' //UI-Actions
+//    implementation 'org.apache.commons:commons-lang3:3.12.0'
+//    implementation 'com.saucelabs:sauce-rest-api:1.1'
+//    implementation 'io.rest-assured:rest-assured:5.3.1'
+//    implementation 'org.slf4j:slf4j-parent:2.0.5' //Logging
+    implementation 'io.github.prashant-ramcharan:courgette-jvm:6.10.0' //Cucumber Wrapper for Parallel Runner
+//    implementation 'io.rest-assured:json-schema-validator:5.3.1'
+//    implementation 'org.json:json:20230618'
+
+//    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.2' //junit runner
+//    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.2'
+
+}
+
+test {
+    useJUnitPlatform()
+}
+
+task pathingJar(type: Jar) {
+    dependsOn configurations.runtimeClasspath
+    //appendix = 'pathing'
+
+    doFirst {
+        manifest {
+            attributes "Class-Path": configurations.runtimeClasspath.files.collect {it.toURL().toString().replaceFirst("file:/", '/')}.join(" ")
+        }
+    }
+}
+
+task parallelTest(type: Test) {
+    dependsOn pathingJar
+    doFirst {
+//        classpath = files(sourceSets.test.output.files, pathingJar.archivePath)
+        classpath = files(sourceSets.test.output.files, pathingJar)
+    }
+
+    include '**/ParallelRunner.class'
+    outputs.upToDateWhen { false }
+    testLogging.showStandardStreams = true
+}
