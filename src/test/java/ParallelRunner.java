@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(Courgette.class)
 @CourgetteOptions(
-        threads = 1,
+        threads = 2,
         runLevel = CourgetteRunLevel.FEATURE,
         rerunFailedScenarios = true,
         rerunAttempts = 1,
@@ -17,7 +17,7 @@ import org.junit.runner.RunWith;
 //        environmentInfo = "browser=chrome; git_branch=master",
         cucumberOptions = @CucumberOptions(
                 features = "src/test/resources/features",
-                glue = "src/test/java/ui_tests/step_defs",
+                glue = "ui_tests.step_defs",
                 tags = "@LoginTest",
                 publish = true,
                 plugin = {
