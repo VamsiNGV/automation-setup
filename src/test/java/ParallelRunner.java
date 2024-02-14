@@ -1,9 +1,8 @@
-import courgette.api.CourgetteOptions;
-import courgette.api.CourgetteRunLevel;
-import courgette.api.CourgetteTestOutput;
-import courgette.api.CucumberOptions;
+import courgette.api.*;
 import courgette.api.junit.Courgette;
+import io.cucumber.java.After;
 import org.junit.runner.RunWith;
+import ui_tests.utilities.UIHelperMethods;
 
 @RunWith(Courgette.class)
 @CourgetteOptions(
@@ -14,6 +13,8 @@ import org.junit.runner.RunWith;
         testOutput = CourgetteTestOutput.CONSOLE,
         reportTitle = "Courgette-JVM Example",
         reportTargetDir = "build",
+        plugin = { CourgettePlugin.EXTENT_REPORTS },
+      //  classPath = {"build/libs/*", "build/classes/java/test"},
 //        environmentInfo = "browser=chrome; git_branch=master",
         cucumberOptions = @CucumberOptions(
                 features = "src/test/resources/features",
@@ -26,5 +27,10 @@ import org.junit.runner.RunWith;
                         "html:build/cucumber-report/cucumber.html",
                         "junit:build/cucumber-report/cucumber.xml"}
         ))
-public class ParallelRunner {
+public class ParallelRunner  {
+
+
+
+
 }
+
